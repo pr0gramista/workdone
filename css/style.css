@@ -1,0 +1,4 @@
+#landing, #app {
+  display: none; }
+  #landing.active, #app.active {
+    display: block; }

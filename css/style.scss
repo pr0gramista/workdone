@@ -1,0 +1,10 @@
+body {
+
+}
+
+#landing, #app {
+  display: none;
+  &.active {
+    display: block;
+  }
+}
