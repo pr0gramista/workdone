@@ -1,8 +1,16 @@
 var uid;
 
+function updateDeadlineDate(event) {
+  // TODO date parsing
+  var date = new Date(event.target.value)
+  document.getElementById('deadline-date-display').innerHTML = date
+}
+
 function initalizeApp() {
   document.getElementById('landing').classList.remove('active')
   document.getElementById('app').classList.add('active')
+
+  document.getElementById('deadline-date').addEventListener("input", updateDeadlineDate, false);
 
   firebase.database().ref('deadlines/' + uid).on('child_added', function(data) {
     var newDeadline = document.createElement('li')
@@ -17,7 +25,7 @@ function addDeadline() {
   firebase.database().ref('deadlines/' + uid).push().set({
     task: task,
     creation_date: new Date().toJSON(),
-    end_date: date
+    end_date: new Date()
   })
 }
 
