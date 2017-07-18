@@ -23,7 +23,17 @@
 
         </ul>
         <input id="deadline-task" />
-        <input id="deadline-date" /><span id="deadline-date-display"></span>
+        <div class="date-suggestion">
+
+        </div>
+        <div class="date-display">
+          <input id="deadline-day" placeholder="1" />.
+          <input id="deadline-month" placeholder="1" />.
+          <input id="deadline-year" placeholder="2017" />
+          <input id="deadline-hour" placeholder="12" />:
+          <input id="deadline-minute" placeholder="00" />
+        </div>
+        <span id="deadline-date-display"></span>
         <button onclick="addDeadline()">Add deadline</button>
       </section>
     </main>

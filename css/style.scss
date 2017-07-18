@@ -8,3 +8,23 @@ body {
     display: block;
   }
 }
+
+.date-display {
+  flex: auto;
+  align-items: center;
+
+  input {
+    font-size: 20px;
+    width: 1.4em;
+    margin: 5px;
+    text-align: center;
+  }
+
+  #deadline-year {
+    width: 2.5em;
+  }
+
+  #deadline-hour {
+    margin-left: 20px
+  }
+}

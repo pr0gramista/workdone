@@ -1,16 +1,25 @@
 var uid;
 
-function updateDeadlineDate(event) {
-  // TODO date parsing
-  var date = new Date(event.target.value)
-  document.getElementById('deadline-date-display').innerHTML = date
+function updateDeadlineDate() {
+  var day = document.getElementById('deadline-day').value
+  var month = document.getElementById('deadline-month').value
+  var year = document.getElementById('deadline-year').value
+  var hour = document.getElementById('deadline-hour').value
+  var minute = document.getElementById('deadline-minute').value
+
+  var date = new Date(year, month - 1, day, hour, minute)
+  document.getElementById('deadline-date-display').innerHTML = date.toJSON()
 }
 
 function initalizeApp() {
   document.getElementById('landing').classList.remove('active')
   document.getElementById('app').classList.add('active')
 
-  document.getElementById('deadline-date').addEventListener("input", updateDeadlineDate, false);
+  document.getElementById('deadline-day').addEventListener("input", updateDeadlineDate, false);
+  document.getElementById('deadline-month').addEventListener("input", updateDeadlineDate, false);
+  document.getElementById('deadline-year').addEventListener("input", updateDeadlineDate, false);
+  document.getElementById('deadline-hour').addEventListener("input", updateDeadlineDate, false);
+  document.getElementById('deadline-minute').addEventListener("input", updateDeadlineDate, false);
 
   firebase.database().ref('deadlines/' + uid).on('child_added', function(data) {
     var newDeadline = document.createElement('li')

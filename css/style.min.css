@@ -1,1 +1,1 @@
-body{font-family:'Roboto', sans-serif}#landing,#app{display:none}#landing.active,#app.active{display:block}
+body{font-family:'Roboto', sans-serif}#landing,#app{display:none}#landing.active,#app.active{display:block}.date-display{flex:auto;align-items:center}.date-display input{font-size:20px;width:1.4em;margin:5px;text-align:center}.date-display #deadline-year{width:2.5em}.date-display #deadline-hour{margin-left:20px}
