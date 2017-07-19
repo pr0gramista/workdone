@@ -19,23 +19,24 @@
         <button onclick="loginWithGoogle()">Sign in with Google</button>
       </section>
       <section id="app">
-        This is app.
         <ul id="deadlines">
 
         </ul>
-        <input id="deadline-task" />
-        <div class="date-suggestion">
+        <div class="new-deadline">
+          <input id="deadline-task" />
+          <div class="date-suggestion">
 
+          </div>
+          <div class="date-display">
+            <input id="deadline-day" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
+            <input id="deadline-month" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
+            <input id="deadline-year" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="2017" maxlength="4" />
+            <input id="deadline-hour" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="12" maxlength="2" />:
+            <input id="deadline-minute" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="00" maxlength="2" />
+          </div>
+          <span id="deadline-date-display"></span>
+          <button onclick="addDeadline()">Add deadline</button>
         </div>
-        <div class="date-display">
-          <input id="deadline-day" placeholder="1" />.
-          <input id="deadline-month" placeholder="1" />.
-          <input id="deadline-year" placeholder="2017" />
-          <input id="deadline-hour" placeholder="12" />:
-          <input id="deadline-minute" placeholder="00" />
-        </div>
-        <span id="deadline-date-display"></span>
-        <button onclick="addDeadline()">Add deadline</button>
       </section>
     </main>
     <footer>

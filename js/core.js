@@ -1,20 +1,25 @@
-var uid;
-
-var newDeadline = {}
+var uid
 
 function updateDeadlines() {
   var now = _.now()
   var deadlines = document.getElementsByClassName('deadline')
   _.forEach(deadlines, function(deadline) {
-    console.log('WOW')
     var end_date_field = deadline.getElementsByClassName('end_date')[0]
     end_date_field.innerHTML = deadline.getAttribute('end_date') - now
-    console.log(end_date_field)
-    console.log(deadline.getAttribute('end_date') - now)
   })
 }
 setInterval(updateDeadlines, 100)
 
+function validateNewDeadlineDate(event) {
+  var month = document.getElementById('deadline-month').value
+  var date = getNewDeadlineDate()
+  return date.getMonth() === month
+}
+
+/*
+ * Returns new date for new deadline, can
+ * return null if date is invalid
+ */
 function getNewDeadlineDate() {
   var day = document.getElementById('deadline-day').value
   var month = document.getElementById('deadline-month').value
@@ -22,23 +27,63 @@ function getNewDeadlineDate() {
   var hour = document.getElementById('deadline-hour').value
   var minute = document.getElementById('deadline-minute').value
 
-  return new Date(year, month - 1, day, hour, minute)
+  day = day.length == 0 ? '1' : day
+  month = month.length == 0 ? '1' : month
+  year = year.length == 0 ? '2017' : year
+  hour = hour.length == 0 ? '12' : hour
+  minute = minute.length == 0 ? '00' : minute
+
+  day = _.toNumber(day)
+  month = _.toNumber(month)
+  year = _.toNumber(year)
+  hour = _.toNumber(hour)
+  minute = _.toNumber(minute)
+
+  // Validate
+  var checkDay = _.isFinite(day) && day >= 1 && day <= 31
+  var checkMonth = _.isFinite(month) && month >= 1 && month <= 12
+  var checkYear = _.isFinite(year) && year >= 2017
+  var checkHour = _.isFinite(hour) && hour >= 0 && hour <= 23
+  var checkMinute = _.isFinite(minute) && minute >= 0 && minute <= 59
+
+  if (!checkDay || !checkMonth || !checkYear || !checkHour || !checkMinute)
+    return null
+
+  var date = new Date(year, month - 1, day, hour, minute)
+
+  // Check if date is valid calendar day
+  if (date.getMonth() + 1 !== month) {
+    return null
+  }
+
+  // Check if date is bigger than now
+  if (date.getTime() < _.now())
+    return null
+
+  return date
 }
 
 function updateNewDeadlineDate() {
   var date = getNewDeadlineDate()
-  document.getElementById('deadline-date-display').innerHTML = date.toJSON()
+  if (date != null) {
+    document.getElementById('deadline-date-display').innerHTML = date.toJSON()
+  } else {
+    document.getElementById('deadline-date-display').innerHTML = "Invalid date :("
+  }
 }
 
+/*
+ * Initialize app by setting event listeners etc.
+ */
 function initalizeApp() {
   document.getElementById('landing').classList.remove('active')
   document.getElementById('app').classList.add('active')
 
-  document.getElementById('deadline-day').addEventListener("input", updateNewDeadlineDate, false);
-  document.getElementById('deadline-month').addEventListener("input", updateNewDeadlineDate, false);
-  document.getElementById('deadline-year').addEventListener("input", updateNewDeadlineDate, false);
-  document.getElementById('deadline-hour').addEventListener("input", updateNewDeadlineDate, false);
-  document.getElementById('deadline-minute').addEventListener("input", updateNewDeadlineDate, false);
+  document.getElementById('deadline-day').addEventListener("input", updateNewDeadlineDate, false)
+  document.getElementById('deadline-month').addEventListener("input", updateNewDeadlineDate, false)
+  document.getElementById('deadline-year').addEventListener("input", updateNewDeadlineDate, false)
+  document.getElementById('deadline-hour').addEventListener("input", updateNewDeadlineDate, false)
+  document.getElementById('deadline-minute').addEventListener("input", updateNewDeadlineDate, false)
 
   firebase.database().ref('deadlines/' + uid).on('child_added', function(data) {
     var newDeadline = document.createElement('li')
@@ -47,7 +92,7 @@ function initalizeApp() {
     newDeadline.setAttribute('end_date', data.val().end_date)
     newDeadline.innerHTML = data.val().task + '<div class="end_date"></div>'
     document.getElementById('deadlines').prepend(newDeadline)
-  });
+  })
 }
 
 function addDeadline() {
