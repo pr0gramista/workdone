@@ -37,11 +37,17 @@ function getNewDeadlineDate() {
   var hour = document.getElementById('deadline-hour').value
   var minute = document.getElementById('deadline-minute').value
 
-  day = day.length == 0 ? '1' : day
-  month = month.length == 0 ? '1' : month
-  year = year.length == 0 ? '2017' : year
-  hour = hour.length == 0 ? '12' : hour
-  minute = minute.length == 0 ? '00' : minute
+  var dayDefault = document.getElementById('deadline-day').getAttribute('placeholder')
+  var monthDefault = document.getElementById('deadline-month').getAttribute('placeholder')
+  var yearDefault = document.getElementById('deadline-year').getAttribute('placeholder')
+  var hourDefault = document.getElementById('deadline-hour').getAttribute('placeholder')
+  var minuteDefault = document.getElementById('deadline-minute').getAttribute('placeholder')
+
+  day = day.length == 0 ? dayDefault : day
+  month = month.length == 0 ? monthDefault : month
+  year = year.length == 0 ? yearDefault : year
+  hour = hour.length == 0 ? hourDefault : hour
+  minute = minute.length == 0 ? minuteDefault : minute
 
   day = _.toNumber(day)
   month = _.toNumber(month)
@@ -90,24 +96,44 @@ function initalizeApp() {
   document.getElementById('landing').classList.remove('active')
   document.getElementById('app').classList.add('active')
 
-  document.getElementById('deadline-day').addEventListener("input", updateNewDeadlineDate, false)
-  document.getElementById('deadline-month').addEventListener("input", updateNewDeadlineDate, false)
-  document.getElementById('deadline-year').addEventListener("input", updateNewDeadlineDate, false)
-  document.getElementById('deadline-hour').addEventListener("input", updateNewDeadlineDate, false)
-  document.getElementById('deadline-minute').addEventListener("input", updateNewDeadlineDate, false)
+  // Fill placeholders
+  var now = moment().add(1, 'day')
 
+  var dayElement = document.getElementById('deadline-day')
+  dayElement.addEventListener("input", updateNewDeadlineDate, false)
+  dayElement.setAttribute('placeholder', now.date())
+  var monthElement = document.getElementById('deadline-month')
+  monthElement.addEventListener("input", updateNewDeadlineDate, false)
+  monthElement.setAttribute('placeholder', now.format('MM'))
+  var yearElement = document.getElementById('deadline-year')
+  yearElement.addEventListener("input", updateNewDeadlineDate, false)
+  yearElement.setAttribute('placeholder', now.year())
+  var hourElement = document.getElementById('deadline-hour')
+  hourElement.addEventListener("input", updateNewDeadlineDate, false)
+  hourElement.setAttribute('placeholder', now.hours())
+  var minuteElement = document.getElementById('deadline-minute')
+  minuteElement.addEventListener("input", updateNewDeadlineDate, false)
+  minuteElement.setAttribute('placeholder', now.format('mm'))
+
+  // Update new deadline date (it will use placeholder values)
+  updateNewDeadlineDate()
+
+  // Set Firebase reference to deadlines
   var deadlinesRef = firebase.database().ref('deadlines/' + uid)
   deadlinesRef.on('child_added', function(data) {
+    // Create new deadline
     var newDeadline = document.createElement('li')
     newDeadline.classList.add('deadline')
     newDeadline.id = data.key
     newDeadline.setAttribute('end_date', data.val().end_date)
     newDeadline.innerHTML = data.val().task + '<button onclick="removeDeadline(\'' + data.key + '\')">X</button><div class="end_date"></div>'
 
+    // Prepend to DOM
     document.getElementById('deadlines').prepend(newDeadline)
   })
 
   deadlinesRef.on('child_removed', function(data) {
+    // Remove deadline by using id
     var element = document.getElementById(data.key)
     if (element != null) {
       element.remove()
