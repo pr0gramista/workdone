@@ -13,7 +13,9 @@
   </head>
   <body>
     <nav>
-      Workdone
+      <div class="content">
+        Workdone
+      </div>
     </nav>
     <main>
       <section id="landing" class="active">
@@ -21,12 +23,11 @@
       </section>
       <section id="app">
         <ul id="deadlines">
-
         </ul>
         <div class="new-deadline">
+          <span id="deadline-speech">What will you do?</span>
           <input id="deadline-task" />
           <div class="date-suggestion">
-
           </div>
           <div class="date-display">
             <input id="deadline-day" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
@@ -36,7 +37,7 @@
             <input id="deadline-minute" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="00" maxlength="2" />
           </div>
           <span id="deadline-date-display"></span>
-          <button onclick="addDeadline()">Add deadline</button>
+          <button id="add-deadline" onclick="addDeadline()">Add deadline</button>
         </div>
       </section>
     </main>

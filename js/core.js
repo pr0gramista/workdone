@@ -126,7 +126,7 @@ function initalizeApp() {
     newDeadline.classList.add('deadline')
     newDeadline.id = data.key
     newDeadline.setAttribute('end_date', data.val().end_date)
-    newDeadline.innerHTML = data.val().task + '<button onclick="removeDeadline(\'' + data.key + '\')">X</button><div class="end_date"></div>'
+    newDeadline.innerHTML = data.val().task + '<button id="remove-deadline" onclick="removeDeadline(\'' + data.key + '\')">X</button><div class="end_date"></div>'
 
     // Prepend to DOM
     document.getElementById('deadlines').prepend(newDeadline)

@@ -1,5 +1,16 @@
+$container-size: 1024px;
+$primary: #303f9f;
+$primary-dark: #001970;
+$primary-light: #666ad1;
+
+$secondary: #d81b60;
+$secondary-dark: #a00037;
+$secondary-light: #ff5c8d;
+
 body {
   font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 #landing, #app {
@@ -10,13 +21,14 @@ body {
 }
 
 .date-display {
-  flex: auto;
+  display: flex;
   align-items: center;
+  justify-content: center;
 
   input {
     font-size: 20px;
     width: 1.4em;
-    margin: 5px;
+    margin: 2px;
     text-align: center;
   }
 
@@ -26,5 +38,63 @@ body {
 
   #deadline-hour {
     margin-left: 20px
+  }
+}
+
+.new-deadline {
+  padding: 10px;
+  width: 400px;
+  margin: auto;
+
+  #deadline-task {
+    width: 100%;
+    font-size: 1.3em;
+    height: 20px;
+  }
+
+  #deadline-date-display, #deadline-speech {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  #add-deadline {
+    display: block;
+    margin: auto;
+  }
+}
+
+main {
+  max-width: $container-size;
+  margin: auto;
+}
+
+nav {
+  width: 100%;
+  .content {
+    max-width: $container-size;
+    margin: auto;
+    font-size: 1.5em;
+  }
+  color: #FFF;
+  background: $primary;
+  padding: 8px 8px 8px 16px;
+  border-bottom: 1px solid #C3C3C3;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+ul#deadlines {
+  padding: 10px 20px 10px 20px;
+
+  li {
+    list-style: none;
+    margin-bottom: 10px;
+
+    button#remove-deadline {
+      background: none;
+      outline: none;
+      padding: 5px;
+      border: none;
+    }
   }
 }
