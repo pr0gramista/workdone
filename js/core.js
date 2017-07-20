@@ -1,11 +1,21 @@
 var uid
 
+var calendarFormat = {
+  sameDay: '[Today at] H:mm',
+  nextDay: '[Tomorrow at] H:mm',
+  nextWeek : 'dddd [at] H:mm',
+  lastDay: '[Yesterday at] H:mm',
+  lastWeek : '[last] dddd [at] H:mm',
+  sameElse: 'DD/MM/YYYY H:mm'
+}
+
 function updateDeadlines() {
   var now = _.now()
   var deadlines = document.getElementsByClassName('deadline')
   _.forEach(deadlines, function(deadline) {
     var end_date_field = deadline.getElementsByClassName('end_date')[0]
-    end_date_field.innerHTML = deadline.getAttribute('end_date') - now
+    end_date_field.innerHTML = moment(deadline.getAttribute('end_date'), "x")
+      .calendar(null, calendarFormat)
   })
 }
 setInterval(updateDeadlines, 100)
@@ -66,7 +76,8 @@ function getNewDeadlineDate() {
 function updateNewDeadlineDate() {
   var date = getNewDeadlineDate()
   if (date != null) {
-    document.getElementById('deadline-date-display').innerHTML = date.toJSON()
+    document.getElementById('deadline-date-display').innerHTML = moment(date)
+      .calendar(null, calendarFormat);
   } else {
     document.getElementById('deadline-date-display').innerHTML = "Invalid date :("
   }
