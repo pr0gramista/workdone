@@ -96,13 +96,22 @@ function initalizeApp() {
   document.getElementById('deadline-hour').addEventListener("input", updateNewDeadlineDate, false)
   document.getElementById('deadline-minute').addEventListener("input", updateNewDeadlineDate, false)
 
-  firebase.database().ref('deadlines/' + uid).on('child_added', function(data) {
+  var deadlinesRef = firebase.database().ref('deadlines/' + uid)
+  deadlinesRef.on('child_added', function(data) {
     var newDeadline = document.createElement('li')
     newDeadline.classList.add('deadline')
     newDeadline.id = data.key
     newDeadline.setAttribute('end_date', data.val().end_date)
-    newDeadline.innerHTML = data.val().task + '<div class="end_date"></div>'
+    newDeadline.innerHTML = data.val().task + '<button onclick="removeDeadline(\'' + data.key + '\')">X</button><div class="end_date"></div>'
+
     document.getElementById('deadlines').prepend(newDeadline)
+  })
+
+  deadlinesRef.on('child_removed', function(data) {
+    var element = document.getElementById(data.key)
+    if (element != null) {
+      element.remove()
+    }
   })
 }
 
@@ -115,6 +124,10 @@ function addDeadline() {
     creation_date: _.now(),
     end_date: end_date.getTime()
   })
+}
+
+function removeDeadline(key) {
+  firebase.database().ref('deadlines/' + uid + '/' + key).remove()
 }
 
 firebase.auth().onAuthStateChanged(function(user) {
