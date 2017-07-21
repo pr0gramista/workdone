@@ -7,6 +7,10 @@ $secondary: #d81b60;
 $secondary-dark: #a00037;
 $secondary-light: #ff5c8d;
 
+$screen-sm-min: 768px;
+$screen-md-min: 992px;
+$screen-lg-min: 1200px;
+
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
@@ -84,7 +88,25 @@ nav {
 }
 
 ul#deadlines {
+  margin: 0;
   padding: 10px 20px 10px 20px;
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr);
+
+  @media (min-width: $screen-sm-min) {
+    grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr);
+  }
+
+  @media (min-width: $screen-md-min) {
+    grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr);
+  }
+
+  @media (min-width: $screen-lg-min) {
+    grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr);
+  }
+
+  grid-gap: 10px;
+  justify-items: center;
 
   li {
     list-style: none;
