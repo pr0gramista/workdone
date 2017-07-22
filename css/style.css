@@ -25,6 +25,17 @@ button {
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   font-weight: 600; }
+  button.fab {
+    border-radius: 32px;
+    border: none;
+    padding: 16px;
+    background: #d81b60;
+    line-height: 1; }
+    button.fab .material-icons {
+      display: block;
+      margin: auto;
+      width: 24px;
+      height: 24px; }
 
 #landing, #app {
   display: none; }
@@ -92,14 +103,7 @@ ul#deadlines {
   position: absolute;
   display: block;
   right: 16px;
-  bottom: -72px;
-  width: 56px;
-  height: 56px;
-  border-radius: 32px;
-  border: none;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
-  color: #FFF;
-  background: #d81b60; }
+  bottom: -72px; }
 
 #new-deadline {
   display: flex;

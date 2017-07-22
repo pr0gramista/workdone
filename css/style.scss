@@ -44,6 +44,21 @@ button {
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   font-weight: 600;
+
+  &.fab {
+    border-radius: 32px;
+    border: none;
+    padding: 16px;
+    background: $secondary;
+    line-height: 1;
+
+    .material-icons {
+      display: block;
+      margin: auto;
+      width: 24px;
+      height: 24px;
+    }
+  }
 }
 
 #landing, #app {
@@ -134,13 +149,6 @@ ul#deadlines {
   display: block;
   right: 16px;
   bottom: -72px;
-  width: 56px;
-  height: 56px;
-  border-radius: 32px;
-  border: none;
-  box-shadow: $shadow-1;
-  color: #FFF;
-  background: $secondary;
 }
 
 #new-deadline {
