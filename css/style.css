@@ -106,7 +106,7 @@ ul#deadlines {
   bottom: -72px; }
 
 #new-deadline {
-  display: flex;
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -115,6 +115,8 @@ ul#deadlines {
   background: rgba(0, 0, 0, 0.3);
   align-items: center;
   justify-content: center; }
+  #new-deadline.show {
+    display: flex; }
   #new-deadline .card {
     max-width: 500px; }
   #new-deadline #deadline-task {

@@ -96,6 +96,14 @@ function initalizeApp() {
   document.getElementById('landing').classList.remove('active')
   document.getElementById('app').classList.add('active')
 
+  // Set event listener for new deadline modal
+  document.getElementById('show-newdeadline').addEventListener('click', showNewDeadlineModal)
+  document.getElementById('new-deadline').addEventListener('click', function (e) {
+    if (e.target.id === 'new-deadline') { // Hit the blackbox
+      hideNewDeadlineModal()
+    }
+  })
+
   // Fill placeholders
   var now = moment().add(1, 'day')
 
@@ -150,10 +158,23 @@ function addDeadline() {
     creation_date: _.now(),
     end_date: end_date.getTime()
   })
+
+  hideNewDeadlineModal()
 }
 
 function removeDeadline(key) {
   firebase.database().ref('deadlines/' + uid + '/' + key).remove()
+}
+
+/*
+ * Add new deadline modal functions
+ */
+function showNewDeadlineModal() {
+  document.getElementById('new-deadline').classList.add('show')
+}
+
+function hideNewDeadlineModal() {
+  document.getElementById('new-deadline').classList.remove('show')
 }
 
 firebase.auth().onAuthStateChanged(function(user) {
