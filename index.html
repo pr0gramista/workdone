@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/basscss@8.0.2/css/basscss.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/css/style.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
@@ -24,20 +25,23 @@
       <section id="app">
         <ul id="deadlines">
         </ul>
-        <div class="new-deadline">
-          <span id="deadline-speech">What will you do?</span>
-          <input id="deadline-task" />
-          <div class="date-suggestion">
+        <button id="show-newdeadline"><i class="material-icons">add</i></button>
+        <div id="new-deadline">
+          <div class="card center-wrapper">
+            <span id="deadline-speech">What will you do?</span>
+            <input id="deadline-task" />
+            <div class="date-suggestion">
+            </div>
+            <div class="date-display">
+              <input id="deadline-day" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
+              <input id="deadline-month" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
+              <input id="deadline-year" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="2017" maxlength="4" />
+              <input id="deadline-hour" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="12" maxlength="2" />:
+              <input id="deadline-minute" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="00" maxlength="2" />
+            </div>
+            <span id="deadline-date-display"></span>
+            <button id="add-deadline" onclick="addDeadline()">Add deadline</button>
           </div>
-          <div class="date-display">
-            <input id="deadline-day" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
-            <input id="deadline-month" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
-            <input id="deadline-year" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="2017" maxlength="4" />
-            <input id="deadline-hour" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="12" maxlength="2" />:
-            <input id="deadline-minute" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="00" maxlength="2" />
-          </div>
-          <span id="deadline-date-display"></span>
-          <button id="add-deadline" onclick="addDeadline()">Add deadline</button>
         </div>
       </section>
     </main>

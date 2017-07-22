@@ -11,10 +11,39 @@ $screen-sm-min: 768px;
 $screen-md-min: 992px;
 $screen-lg-min: 1280px;
 
+$shadow-1: 0 2px 2px rgba(0, 0, 0, 0.25);
+
+$input-border: 2px solid $secondary;
+
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
+}
+
+input {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  background: none;
+  padding: 4px;
+  margin: 8px;
+  box-sizing: content-box;
+  border-bottom: $input-border;
+  font-family: 'Roboto', sans-serif;
+}
+
+button {
+  color: #FFF;
+  background: $secondary;
+  margin: 8px;
+  padding: 8px 16px;
+  border: none;
+  box-shadow: $shadow-1;
+  border-radius: 2px;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 #landing, #app {
@@ -45,30 +74,8 @@ body {
   }
 }
 
-.new-deadline {
-  padding: 10px;
-  width: 400px;
-  margin: auto;
-
-  #deadline-task {
-    width: 100%;
-    font-size: 1.3em;
-    height: 20px;
-  }
-
-  #deadline-date-display, #deadline-speech {
-    display: block;
-    width: 100%;
-    text-align: center;
-  }
-
-  #add-deadline {
-    display: block;
-    margin: auto;
-  }
-}
-
 main {
+  position: relative;
   width: 95%;
   max-width: $container-size;
   margin: auto;
@@ -85,7 +92,7 @@ nav {
   background: $primary;
   padding: 8px 8px 8px 16px;
   border-bottom: 1px solid #C3C3C3;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: $shadow-1;
 }
 
 ul#deadlines {
@@ -120,4 +127,62 @@ ul#deadlines {
       border: none;
     }
   }
+}
+
+#show-newdeadline {
+  position: absolute;
+  display: block;
+  right: 16px;
+  bottom: -72px;
+  width: 56px;
+  height: 56px;
+  border-radius: 32px;
+  border: none;
+  box-shadow: $shadow-1;
+  color: #FFF;
+  background: $secondary;
+}
+
+#new-deadline {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  align-items: center;
+  justify-content: center;
+
+  .card {
+    max-width: 500px;
+  }
+
+  #deadline-task {
+    font-size: 1.2em;
+  }
+
+  #deadline-date-display, #deadline-speech {
+    display: block;
+    margin: 8px;
+    width: 100%;
+    text-align: center;
+  }
+
+  #deadline-speech {
+    font-size: 1.3em;
+    margin-bottom: 8px;
+  }
+
+  #add-deadline {
+    display: block;
+    margin: 8px auto;
+  }
+}
+
+.card {
+  padding: 16px;
+  border-radius: 4px;
+  background: #EEE;
+  box-shadow: $shadow-1;
 }
