@@ -39,7 +39,8 @@ body {
     margin: auto; }
 
 main {
-  max-width: 1024px;
+  width: 95%;
+  max-width: 1280px;
   margin: auto; }
 
 nav {
@@ -50,12 +51,26 @@ nav {
   border-bottom: 1px solid #C3C3C3;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25); }
   nav .content {
-    max-width: 1024px;
+    max-width: 1280px;
     margin: auto;
     font-size: 1.5em; }
 
 ul#deadlines {
-  padding: 10px 20px 10px 20px; }
+  margin: 0;
+  padding: 10px 20px 10px 20px;
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr);
+  grid-gap: 10px;
+  justify-items: center; }
+  @media (min-width: 768px) {
+    ul#deadlines {
+      grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr); } }
+  @media (min-width: 992px) {
+    ul#deadlines {
+      grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr); } }
+  @media (min-width: 1280px) {
+    ul#deadlines {
+      grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr); } }
   ul#deadlines li {
     list-style: none;
     margin-bottom: 10px; }
