@@ -9,8 +9,10 @@ var calendarFormat = {
   sameElse: 'DD/MM/YYYY H:mm'
 }
 
+/*
+ * Refresh deadlines DOM
+ */
 function updateDeadlines() {
-  var now = _.now()
   var deadlines = document.getElementsByClassName('deadline')
   _.forEach(deadlines, function(deadline) {
     var end_date_field = deadline.getElementsByClassName('end_date')[0]
@@ -19,12 +21,6 @@ function updateDeadlines() {
   })
 }
 setInterval(updateDeadlines, 100)
-
-function validateNewDeadlineDate(event) {
-  var month = document.getElementById('deadline-month').value
-  var date = getNewDeadlineDate()
-  return date.getMonth() === month
-}
 
 /*
  * Returns new date for new deadline, can
@@ -79,6 +75,9 @@ function getNewDeadlineDate() {
   return date
 }
 
+/*
+ * Updates display of new deadline's end date
+ */
 function updateNewDeadlineDate() {
   var date = getNewDeadlineDate()
   if (date != null) {
