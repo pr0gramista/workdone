@@ -24,7 +24,8 @@ button {
   border-radius: 2px;
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
-  font-weight: 600; }
+  font-weight: 600;
+  cursor: pointer; }
   button.fab {
     border-radius: 32px;
     border: none;
@@ -79,7 +80,7 @@ ul#deadlines {
   padding: 10px 20px 10px 20px;
   display: grid;
   grid-template-columns: minmax(300px, 1fr);
-  grid-gap: 10px;
+  grid-gap: 15px;
   justify-items: center; }
   @media (min-width: 768px) {
     ul#deadlines {
@@ -91,13 +92,32 @@ ul#deadlines {
     ul#deadlines {
       grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr); } }
   ul#deadlines li {
-    list-style: none;
-    margin-bottom: 10px; }
+    text-align: center;
+    font-size: 1.3em;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    list-style: none; }
     ul#deadlines li button#remove-deadline {
+      position: absolute;
+      top: 0;
+      right: 0;
       background: none;
       outline: none;
-      padding: 5px;
-      border: none; }
+      border: none;
+      box-shadow: none;
+      opacity: 0;
+      padding: 0;
+      margin: 12px;
+      transition: opacity ease-in-out 0.5s;
+      color: #434343; }
+    ul#deadlines li:hover button#remove-deadline {
+      opacity: 1;
+      transition: opacity ease-in-out 0.5s; }
+    ul#deadlines li .end_date {
+      margin: 4px;
+      color: #999;
+      font-size: 0.8rem; }
 
 #show-newdeadline {
   position: absolute;
