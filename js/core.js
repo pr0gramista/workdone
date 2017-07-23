@@ -16,8 +16,23 @@ function updateDeadlines() {
   var deadlines = document.getElementsByClassName('deadline')
   _.forEach(deadlines, function(deadline) {
     var end_date_field = deadline.getElementsByClassName('end_date')[0]
-    end_date_field.innerHTML = moment(deadline.getAttribute('end_date'), "x")
-      .calendar(null, calendarFormat)
+    var end_date = moment(deadline.getAttribute('end_date'), "x")
+    end_date_field.innerHTML = end_date.calendar(null, calendarFormat)
+
+    if (deadline.classList.contains('display-timer')) {
+      var timer = deadline.getElementsByClassName('timer')[0]
+      var diff = end_date.diff()
+
+      var duration = moment.duration(diff)
+      var days = duration.days()
+      if (days <= 0) {
+        timer.innerHTML = moment.utc(diff).format("HH:mm:ss")
+      } else if (days <= 2) {
+        timer.innerHTML = Math.floor(duration.asHours()) + moment.utc(diff).format(":mm:ss")
+      } else {
+        timer.innerHTML = (days) + 'd ' + moment.utc(diff).format("HH:mm:ss")
+      }
+    }
   })
 }
 setInterval(updateDeadlines, 100)
@@ -104,23 +119,23 @@ function initalizeApp() {
   })
 
   // Fill placeholders
-  var now = moment().add(1, 'day')
+  var tomorrow = moment().add(1, 'day')
 
   var dayElement = document.getElementById('deadline-day')
   dayElement.addEventListener("input", updateNewDeadlineDate, false)
-  dayElement.setAttribute('placeholder', now.date())
+  dayElement.setAttribute('placeholder', tomorrow.date())
   var monthElement = document.getElementById('deadline-month')
   monthElement.addEventListener("input", updateNewDeadlineDate, false)
-  monthElement.setAttribute('placeholder', now.format('MM'))
+  monthElement.setAttribute('placeholder', tomorrow.format('MM'))
   var yearElement = document.getElementById('deadline-year')
   yearElement.addEventListener("input", updateNewDeadlineDate, false)
-  yearElement.setAttribute('placeholder', now.year())
+  yearElement.setAttribute('placeholder', tomorrow.year())
   var hourElement = document.getElementById('deadline-hour')
   hourElement.addEventListener("input", updateNewDeadlineDate, false)
-  hourElement.setAttribute('placeholder', now.hours())
+  hourElement.setAttribute('placeholder', tomorrow.hours())
   var minuteElement = document.getElementById('deadline-minute')
   minuteElement.addEventListener("input", updateNewDeadlineDate, false)
-  minuteElement.setAttribute('placeholder', now.format('mm'))
+  minuteElement.setAttribute('placeholder', tomorrow.format('mm'))
 
   // Update new deadline date (it will use placeholder values)
   updateNewDeadlineDate()
@@ -128,13 +143,27 @@ function initalizeApp() {
   // Set Firebase reference to deadlines
   var deadlinesRef = firebase.database().ref('deadlines/' + uid)
   deadlinesRef.on('child_added', function(data) {
+    var deadlineData = data.val()
+
     // Create new deadline
     var newDeadline = document.createElement('li')
     newDeadline.classList.add('deadline')
     newDeadline.classList.add('card')
+
     newDeadline.id = data.key
-    newDeadline.setAttribute('end_date', data.val().end_date)
-    newDeadline.innerHTML = data.val().task + '<button id="remove-deadline" onclick="removeDeadline(\'' + data.key + '\')"><i class="material-icons">delete</i></button><div class="end_date"></div>'
+    newDeadline.setAttribute('end_date', deadlineData.end_date)
+
+    if (deadlineData.display == 'timer') {
+      newDeadline.classList.add('display-timer')
+      newDeadline.innerHTML = `
+      ${ deadlineData.task }
+      <button id="remove-deadline" onclick="removeDeadline('${ data.key }')">
+        <i class="material-icons">delete</i>
+      </button>
+      <div class="end_date"></div>
+      <div class="timer"></div>
+      `
+    }
 
     // Prepend to DOM
     document.getElementById('deadlines').prepend(newDeadline)
@@ -156,7 +185,8 @@ function addDeadline() {
   firebase.database().ref('deadlines/' + uid).push().set({
     task: task,
     creation_date: _.now(),
-    end_date: end_date.getTime()
+    end_date: end_date.getTime(),
+    display: 'timer'
   })
 
   hideNewDeadlineModal()

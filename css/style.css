@@ -98,6 +98,8 @@ ul#deadlines {
     box-sizing: border-box;
     width: 100%;
     list-style: none; }
+    ul#deadlines li .timer {
+      font-size: 1.3em; }
     ul#deadlines li button#remove-deadline {
       position: absolute;
       top: 0;

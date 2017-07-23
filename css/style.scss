@@ -140,6 +140,10 @@ ul#deadlines {
     width: 100%;
     list-style: none;
 
+    .timer {
+      font-size: 1.3em;
+    }
+
     button#remove-deadline {
       position: absolute;
       top: 0;
