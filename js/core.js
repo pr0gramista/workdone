@@ -198,31 +198,41 @@ function removeDeadline(key) {
   firebase.database().ref('deadlines/' + uid + '/' + key).remove()
 }
 
+function setNewDeadlineDay(date) {
+  document.getElementById('deadline-day').value = date.date()
+  document.getElementById('deadline-month').value = date.format('MM')
+  document.getElementById('deadline-year').value = date.year()
+  document.getElementById('deadline-hour').value = date.hours()
+  document.getElementById('deadline-minute').value = date.format('mm')
+
+  updateNewDeadlineDate()
+}
+
 var dateShortcutsCreated = false
 function createDateShortcuts() {
   if (dateShortcutsCreated) {
     return
   }
   createDateShortcutElement('End of day', function () {
-    var date = moment().endOf('day')
+    setNewDeadlineDay(moment().endOf('day'))
   })
   createDateShortcutElement('Tomorrow', function () {
-    var date = moment().add(1, 'days')
+    setNewDeadlineDay(moment().add(1, 'days'))
   })
   createDateShortcutElement('3 days', function () {
-    var date = moment().add(3, 'days')
+    setNewDeadlineDay(moment().add(3, 'days'))
   })
   createDateShortcutElement('End of week', function () {
-    var date = moment().endOf('week')
+    setNewDeadlineDay(moment().endOf('week'))
   })
   createDateShortcutElement('1 week', function () {
-    var date = moment().add(1, 'weeks')
+    setNewDeadlineDay(moment().add(1, 'weeks'))
   })
   createDateShortcutElement('End of month', function () {
-    var date = moment().endOf('month')
+    setNewDeadlineDay(moment().endOf('month'))
   })
   createDateShortcutElement('1 month', function () {
-    var date = moment().add(1, 'months')
+    setNewDeadlineDay(moment().add(1, 'months'))
   })
   dateShortcutsCreated = true
 }
@@ -231,7 +241,6 @@ function createDateShortcutElement(name, listener) {
   var dateSuggestions = document.getElementsByClassName('date-suggestions')[0]
   var newDateSuggestion = document.createElement('div')
   newDateSuggestion.innerHTML = name
-  newDateSuggestion.setAttribute('date', date)
   newDateSuggestion.classList.add('date-suggestion')
   newDateSuggestion.addEventListener('click', listener)
   dateSuggestions.append(newDateSuggestion)
