@@ -197,16 +197,35 @@ ul#deadlines {
   }
 
   .card {
-    max-width: 500px;
+    max-width: 400px;
+  }
+
+  .date-suggestions {
+    text-align: center;
+    .date-suggestion {
+      font-size: 0.8em;
+      display: inline-block;
+      padding: 6px 12px;
+      margin: 3px;
+      background: #ddd;
+      border-radius: 80px;
+      cursor: pointer;
+    }
   }
 
   #deadline-task {
     font-size: 1.2em;
+    display: block;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    margin-bottom: 8px;
   }
 
   #deadline-date-display, #deadline-speech {
     display: block;
-    margin: 8px;
+    padding: 8px;
     width: 100%;
     text-align: center;
   }
