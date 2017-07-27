@@ -19,9 +19,15 @@ function updateDeadlines() {
     var end_date = moment(deadline.getAttribute('end_date'), "x")
     end_date_field.innerHTML = end_date.calendar(null, calendarFormat)
 
+    // Logic for every type of display
     if (deadline.classList.contains('display-timer')) {
       var timer = deadline.getElementsByClassName('timer')[0]
       var diff = end_date.diff()
+
+      if (moment().isAfter(end_date)) {
+        timer.innerHTML = '00:00:00'
+        return
+      }
 
       var duration = moment.duration(diff)
       var days = duration.days()
@@ -40,6 +46,7 @@ function updateDeadlines() {
       var timeSinceCreation = end_date.diff()
 
       var percentage = 100 - (timeSinceCreation/timerDelta * 100)
+      percentage = moment().isAfter(end_date) ? 100 : percentage
 
       bar.style.width = percentage.toFixed(2) + '%';
     } else if (deadline.classList.contains('display-blocks')) {
@@ -50,26 +57,29 @@ function updateDeadlines() {
       var timeSinceCreation = end_date.diff()
 
       var percentage = 1 - (timeSinceCreation/timerDelta)
+      percentage = moment().isAfter(end_date) ? 1 : percentage
       var howManyBlocksBlack = Math.floor(percentage * 20)
 
       // blockHealth is percentage time of next dying block
-      var blockHealth = 100 - (percentage * 20 - howManyBlocksBlack) * 100
-      if (blockHealth > 87.5) {
-        blocks[howManyBlocksBlack].style.background = '#c21856'
-      } else if (blockHealth > 75) {
-        blocks[howManyBlocksBlack].style.background = '#ac154c'
-      } else if (blockHealth > 62.5) {
-        blocks[howManyBlocksBlack].style.background = '#971243'
-      } else if (blockHealth > 50) {
-        blocks[howManyBlocksBlack].style.background = '#811039'
-      } else if (blockHealth > 37.5) {
-        blocks[howManyBlocksBlack].style.background = '#6c0d30'
-      } else if (blockHealth > 25) {
-        blocks[howManyBlocksBlack].style.background = '#560a26'
-      } else if (blockHealth > 12.5) {
-        blocks[howManyBlocksBlack].style.background = '#40081c'
-      } else {
-        blocks[howManyBlocksBlack].style.background = '#2b0513'
+      if (howManyBlocksBlack <= 19) {
+        var blockHealth = 100 - (percentage * 20 - howManyBlocksBlack) * 100
+        if (blockHealth > 87.5) {
+          blocks[howManyBlocksBlack].style.background = '#c21856'
+        } else if (blockHealth > 75) {
+          blocks[howManyBlocksBlack].style.background = '#ac154c'
+        } else if (blockHealth > 62.5) {
+          blocks[howManyBlocksBlack].style.background = '#971243'
+        } else if (blockHealth > 50) {
+          blocks[howManyBlocksBlack].style.background = '#811039'
+        } else if (blockHealth > 37.5) {
+          blocks[howManyBlocksBlack].style.background = '#6c0d30'
+        } else if (blockHealth > 25) {
+          blocks[howManyBlocksBlack].style.background = '#560a26'
+        } else if (blockHealth > 12.5) {
+          blocks[howManyBlocksBlack].style.background = '#40081c'
+        } else {
+          blocks[howManyBlocksBlack].style.background = '#2b0513'
+        }
       }
 
       // Set colors of dead blocks
@@ -148,21 +158,9 @@ function updateNewDeadlineDate() {
 }
 
 /*
- * Initialize app by setting event listeners etc.
+ * Fills placeholder for new date
  */
-function initalizeApp() {
-  document.getElementById('landing').classList.remove('active')
-  document.getElementById('app').classList.add('active')
-
-  // Set event listener for new deadline modal
-  document.getElementById('show-newdeadline').addEventListener('click', showNewDeadlineModal)
-  document.getElementById('new-deadline').addEventListener('click', function (e) {
-    if (e.target.id === 'new-deadline') { // Hit the blackbox
-      hideNewDeadlineModal()
-    }
-  })
-
-  // Fill placeholders
+function fillPlaceholdersForNewDeadline() {
   var tomorrow = moment().add(1, 'day')
 
   var dayElement = document.getElementById('deadline-day')
@@ -181,8 +179,29 @@ function initalizeApp() {
   minuteElement.addEventListener("input", updateNewDeadlineDate, false)
   minuteElement.setAttribute('placeholder', tomorrow.format('mm'))
 
-  // Update new deadline date (it will use placeholder values)
   updateNewDeadlineDate()
+}
+
+/*
+ * Initialize app by setting event listeners etc.
+ */
+function initalizeApp() {
+  // Change route
+  document.getElementById('landing').classList.remove('active')
+  document.getElementById('app').classList.add('active')
+
+  // Set event listener for new deadline modal
+  document.getElementById('show-newdeadline').addEventListener('click', showNewDeadlineModal)
+  document.getElementById('new-deadline').addEventListener('click', function (e) {
+    if (e.target.id === 'new-deadline') { // Hit the blackbox
+      hideNewDeadlineModal()
+    }
+  })
+
+  // Fill placeholders
+  fillPlaceholdersForNewDeadline()
+  // Every minute update the date
+  setInterval(fillPlaceholdersForNewDeadline, 60)
 
   // Set Firebase reference to deadlines
   var deadlinesRef = firebase.database().ref('deadlines/' + uid)
@@ -268,6 +287,9 @@ function initalizeApp() {
   })
 }
 
+/*
+ * Add deadline by form
+ */
 function addDeadline() {
   var task = document.getElementById('deadline-task').value
   var end_date = getNewDeadlineDate()
@@ -286,6 +308,9 @@ function removeDeadline(key) {
   firebase.database().ref('deadlines/' + uid + '/' + key).remove()
 }
 
+/*
+ * Set new deadline date from code
+ */
 function setNewDeadlineDay(date) {
   document.getElementById('deadline-day').value = date.date()
   document.getElementById('deadline-month').value = date.format('MM')
