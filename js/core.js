@@ -42,6 +42,40 @@ function updateDeadlines() {
       var percentage = 100 - (timeSinceCreation/timerDelta * 100)
 
       bar.style.width = percentage.toFixed(2) + '%';
+    } else if (deadline.classList.contains('display-blocks')) {
+      var blocks = deadline.getElementsByClassName('block')
+      var creation_date = moment(deadline.getAttribute('creation_date'), "x")
+
+      var timerDelta = end_date.diff(creation_date)
+      var timeSinceCreation = end_date.diff()
+
+      var percentage = 1 - (timeSinceCreation/timerDelta)
+      var howManyBlocksBlack = Math.floor(percentage * 20)
+
+      // blockHealth is percentage time of next dying block
+      var blockHealth = 100 - (percentage * 20 - howManyBlocksBlack) * 100
+      if (blockHealth > 87.5) {
+        blocks[howManyBlocksBlack].style.background = '#c21856'
+      } else if (blockHealth > 75) {
+        blocks[howManyBlocksBlack].style.background = '#ac154c'
+      } else if (blockHealth > 62.5) {
+        blocks[howManyBlocksBlack].style.background = '#971243'
+      } else if (blockHealth > 50) {
+        blocks[howManyBlocksBlack].style.background = '#811039'
+      } else if (blockHealth > 37.5) {
+        blocks[howManyBlocksBlack].style.background = '#6c0d30'
+      } else if (blockHealth > 25) {
+        blocks[howManyBlocksBlack].style.background = '#560a26'
+      } else if (blockHealth > 12.5) {
+        blocks[howManyBlocksBlack].style.background = '#40081c'
+      } else {
+        blocks[howManyBlocksBlack].style.background = '#2b0513'
+      }
+
+      // Set colors of dead blocks
+      for (var i = 0; i < howManyBlocksBlack; i++) {
+        blocks[i].style.background = "#150209";
+      }
     }
   })
 }
@@ -184,6 +218,37 @@ function initalizeApp() {
       <div class="end_date"></div>
       <div class="bar">
         <div class="bar-fill"></div>
+      </div>
+      `
+    }  else if (deadlineData.display == 'blocks') {
+      newDeadline.classList.add('display-blocks')
+      newDeadline.innerHTML = `
+      ${ deadlineData.task }
+      <button id="remove-deadline" onclick="removeDeadline('${ data.key }')">
+        <i class="material-icons">delete</i>
+      </button>
+      <div class="end_date"></div>
+      <div class="blocks">
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
+        <div class="block"></div>
       </div>
       `
     }
