@@ -144,6 +144,19 @@ ul#deadlines {
       font-size: 1.3em;
     }
 
+    .bar {
+      margin-top: 10px;
+      width: 100%;
+      background: $secondary-light;
+      .bar-fill {
+        background: $secondary;
+        height: 3px;
+        width: 0%;
+        transition: width 2s linear;
+      }
+      border-radius: 2px;
+    }
+
     button#remove-deadline {
       position: absolute;
       top: 0;

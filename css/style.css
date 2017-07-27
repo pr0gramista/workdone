@@ -100,6 +100,16 @@ ul#deadlines {
     list-style: none; }
     ul#deadlines li .timer {
       font-size: 1.3em; }
+    ul#deadlines li .bar {
+      margin-top: 10px;
+      width: 100%;
+      background: #ff5c8d;
+      border-radius: 2px; }
+      ul#deadlines li .bar .bar-fill {
+        background: #d81b60;
+        height: 3px;
+        width: 0%;
+        transition: width 2s linear; }
     ul#deadlines li button#remove-deadline {
       position: absolute;
       top: 0;
@@ -140,12 +150,28 @@ ul#deadlines {
   #new-deadline.show {
     display: flex; }
   #new-deadline .card {
-    max-width: 500px; }
+    max-width: 400px; }
+  #new-deadline .date-suggestions {
+    text-align: center; }
+    #new-deadline .date-suggestions .date-suggestion {
+      font-size: 0.8em;
+      display: inline-block;
+      padding: 6px 12px;
+      margin: 3px;
+      background: #ddd;
+      border-radius: 80px;
+      cursor: pointer; }
   #new-deadline #deadline-task {
-    font-size: 1.2em; }
+    font-size: 1.2em;
+    display: block;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    margin-bottom: 8px; }
   #new-deadline #deadline-date-display, #new-deadline #deadline-speech {
     display: block;
-    margin: 8px;
+    padding: 8px;
     width: 100%;
     text-align: center; }
   #new-deadline #deadline-speech {

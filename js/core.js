@@ -32,6 +32,16 @@ function updateDeadlines() {
       } else {
         timer.innerHTML = (days) + 'd ' + moment.utc(diff).format("HH:mm:ss")
       }
+    } else if (deadline.classList.contains('display-bar')) {
+      var bar = deadline.getElementsByClassName('bar-fill')[0]
+      var creation_date = moment(deadline.getAttribute('creation_date'), "x")
+
+      var timerDelta = end_date.diff(creation_date)
+      var timeSinceCreation = end_date.diff()
+
+      var percentage = 100 - (timeSinceCreation/timerDelta * 100)
+
+      bar.style.width = percentage.toFixed(2) + '%';
     }
   })
 }
@@ -152,6 +162,7 @@ function initalizeApp() {
 
     newDeadline.id = data.key
     newDeadline.setAttribute('end_date', deadlineData.end_date)
+    newDeadline.setAttribute('creation_date', deadlineData.creation_date)
 
     if (deadlineData.display == 'timer') {
       newDeadline.classList.add('display-timer')
@@ -162,6 +173,18 @@ function initalizeApp() {
       </button>
       <div class="end_date"></div>
       <div class="timer"></div>
+      `
+    } else if (deadlineData.display == 'bar') {
+      newDeadline.classList.add('display-bar')
+      newDeadline.innerHTML = `
+      ${ deadlineData.task }
+      <button id="remove-deadline" onclick="removeDeadline('${ data.key }')">
+        <i class="material-icons">delete</i>
+      </button>
+      <div class="end_date"></div>
+      <div class="bar">
+        <div class="bar-fill"></div>
+      </div>
       `
     }
 
