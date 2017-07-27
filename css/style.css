@@ -92,6 +92,10 @@ ul#deadlines {
     ul#deadlines {
       grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr) minmax(300px, 1fr); } }
   ul#deadlines li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     text-align: center;
     font-size: 1.3em;
     position: relative;

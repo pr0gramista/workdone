@@ -133,6 +133,10 @@ ul#deadlines {
   justify-items: center;
 
   li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     text-align: center;
     font-size: 1.3em;
     position: relative;
