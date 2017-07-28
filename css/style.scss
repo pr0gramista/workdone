@@ -62,6 +62,41 @@ button {
   }
 }
 
+.container {
+  max-width: $container-size;
+  margin: auto;
+}
+
+#landing {
+  text-align: center;
+
+  .instructions {
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+
+    @media (min-width: $screen-sm-min) {
+      flex-direction: row;
+    }
+
+    li {
+      display: block;
+      flex-grow: 1;
+      font-size: 1.2em;
+      .number {
+        font-size: 2em;
+        display: block;
+      }
+      .tip {
+        font-size: 0.8em;
+        color: #666;
+      }
+    }
+  }
+}
+
 #landing, #app {
   display: none;
   &.active {
@@ -93,15 +128,11 @@ button {
 main {
   position: relative;
   width: 95%;
-  max-width: $container-size;
-  margin: auto;
 }
 
 nav {
   width: 100%;
   .content {
-    max-width: $container-size;
-    margin: auto;
     font-size: 1.5em;
   }
   color: #FFF;

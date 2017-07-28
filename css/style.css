@@ -38,6 +38,32 @@ button {
       width: 24px;
       height: 24px; }
 
+.container {
+  max-width: 1280px;
+  margin: auto; }
+
+#landing {
+  text-align: center; }
+  #landing .instructions {
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: column; }
+    @media (min-width: 768px) {
+      #landing .instructions {
+        flex-direction: row; } }
+    #landing .instructions li {
+      display: block;
+      flex-grow: 1;
+      font-size: 1.2em; }
+      #landing .instructions li .number {
+        font-size: 2em;
+        display: block; }
+      #landing .instructions li .tip {
+        font-size: 0.8em;
+        color: #666; }
+
 #landing, #app {
   display: none; }
   #landing.active, #app.active {
@@ -59,9 +85,7 @@ button {
 
 main {
   position: relative;
-  width: 95%;
-  max-width: 1280px;
-  margin: auto; }
+  width: 95%; }
 
 nav {
   width: 100%;
@@ -71,8 +95,6 @@ nav {
   border-bottom: 1px solid #C3C3C3;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25); }
   nav .content {
-    max-width: 1280px;
-    margin: auto;
     font-size: 1.5em; }
 
 ul#deadlines {
