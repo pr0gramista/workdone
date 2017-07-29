@@ -34,10 +34,12 @@ input {
 }
 
 button {
+  line-height: 1;
+  font-size: 14px;
   color: #FFF;
   background: $secondary;
   margin: 8px;
-  padding: 8px 16px;
+  padding: 11px 16px;
   border: none;
   box-shadow: $shadow-1;
   border-radius: 2px;

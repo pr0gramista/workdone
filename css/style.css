@@ -15,10 +15,12 @@ input {
   font-family: 'Roboto', sans-serif; }
 
 button {
+  line-height: 1;
+  font-size: 14px;
   color: #FFF;
   background: #d81b60;
   margin: 8px;
-  padding: 8px 16px;
+  padding: 11px 16px;
   border: none;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
   border-radius: 2px;
