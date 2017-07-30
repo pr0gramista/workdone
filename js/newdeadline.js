@@ -83,13 +83,14 @@ function createDateShortcuts() {
  */
 function addDeadline() {
   var task = document.getElementById('deadline-task').value
+  var display = document.querySelector('input[name="newdeadline-display"]:checked').value
   var end_date = getNewDeadlineDate()
 
   firebase.database().ref('deadlines/' + uid).push().set({
     task: task,
     creation_date: _.now(),
     end_date: end_date.getTime(),
-    display: 'timer'
+    display: display
   })
 
   hideNewDeadlineModal()
