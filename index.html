@@ -40,7 +40,7 @@
 
                 <div class="slide">
                   <span id="deadline-speech">What will you do?</span>
-                  <input id="deadline-task" />
+                  <input id="deadline-task" placeholder="Do a barrel roll" />
                   <button class="fab fab-mini next-slide" left="1">
                     <i class="material-icons">navigate_next</i>
                   </button>
@@ -64,9 +64,18 @@
 
                 <div class="slide">
                   <span id="deadline-speech">How would you like to see it?</span>
-                  <input type="radio" value="timer" name="newdeadline-display" id="nd-display-timer" checked><label for="nd-display-timer">Timer</label>
-                  <input type="radio" value="bar" name="newdeadline-display" id="nd-display-progressbar"><label for="nd-display-progressbar">Progress bar</label>
-                  <input type="radio" value="blocks" name="newdeadline-display" id="nd-display-blocks"><label for="nd-display-blocks">Blocks</label>
+                  <div>
+                    <input type="radio" value="timer" name="newdeadline-display" id="nd-display-timer" checked />
+                    <label for="nd-display-timer">Timer</label>
+                  </div>
+                  <div>
+                    <input type="radio" value="bar" name="newdeadline-display" id="nd-display-progressbar" />
+                    <label for="nd-display-progressbar">Progress bar</label>
+                  </div>
+                  <div>
+                    <input type="radio" value="blocks" name="newdeadline-display" id="nd-display-blocks" />
+                    <label for="nd-display-blocks">Blocks</label>
+                  </div>
                   <button id="add-deadline" onclick="addDeadline()">Add deadline</button>
                 </div>
               </div>
@@ -76,6 +85,9 @@
       </section>
     </main>
     <footer>
+      <div class="container">
+          Make with <i class="material-icons">favorite</i> by <a href="https://pr0gramista.pl">pr0gramista</a>
+      </div>
     </footer>
     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
     <script>

@@ -14,6 +14,9 @@ input {
   border-bottom: 2px solid #d81b60;
   font-family: 'Roboto', sans-serif; }
 
+a {
+  color: #d81b60; }
+
 button {
   line-height: 1;
   font-size: 14px;
@@ -60,6 +63,11 @@ main {
   position: relative;
   width: 95%; }
 
+footer {
+  padding: 40px 10px;
+  color: #999;
+  text-align: center; }
+
 nav {
   width: 100%;
   font-size: 1.5em;
@@ -94,6 +102,9 @@ nav {
   max-width: 1280px;
   margin: auto; }
 
+.material-icons {
+  vertical-align: middle; }
+
 #landing {
   text-align: center; }
   #landing .instructions {
@@ -126,7 +137,7 @@ nav {
   align-items: center;
   justify-content: center; }
   .date-display input {
-    font-size: 20px;
+    font-size: 26px;
     width: 1.4em;
     margin: 2px;
     text-align: center; }
@@ -226,7 +237,11 @@ ul#deadlines {
   #new-deadline.show {
     display: flex; }
   #new-deadline .card {
-    max-width: 400px; }
+    max-width: 400px;
+    transition: transform 0.5s ease-in-out; }
+    #new-deadline .card.hide {
+      transform: scale(0.01);
+      transition: transform 0.1s ease-in-out; }
   #new-deadline .date-suggestions {
     text-align: center;
     padding: 4px 0; }
@@ -254,7 +269,7 @@ ul#deadlines {
     margin-bottom: 8px; }
   #new-deadline #deadline-date-display, #new-deadline #deadline-speech {
     display: block;
-    padding: 8px;
+    padding: 4px;
     width: 100%;
     text-align: center; }
   #new-deadline #deadline-speech {

@@ -34,6 +34,10 @@ input {
   font-family: 'Roboto', sans-serif;
 }
 
+a {
+  color: $secondary;
+}
+
 button {
   line-height: 1;
   font-size: 14px;
@@ -93,6 +97,12 @@ main {
   width: 95%;
 }
 
+footer {
+  padding: 40px 10px;
+  color: #999;
+  text-align: center;
+}
+
 nav {
   width: 100%;
   font-size: 1.5em;
@@ -132,4 +142,8 @@ nav {
 .container {
   max-width: $container-size;
   margin: auto;
+}
+
+.material-icons {
+  vertical-align: middle;
 }

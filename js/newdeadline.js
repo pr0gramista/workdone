@@ -3,6 +3,10 @@
  */
 function showNewDeadlineModal() {
   document.getElementById('new-deadline').classList.add('show')
+  document.querySelector('#new-deadline .card').classList.add('hide')
+  setTimeout(function () {
+    document.querySelector('#new-deadline .card').classList.remove('hide')
+  }, 100)
 }
 
 function hideNewDeadlineModal() {
