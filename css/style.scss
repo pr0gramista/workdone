@@ -1,73 +1,4 @@
-$container-size: 1280px;
-$primary: #303f9f;
-$primary-dark: #001970;
-$primary-light: #666ad1;
-
-$secondary: #d81b60;
-$secondary-dark: #a00037;
-$secondary-light: #ff5c8d;
-
-$screen-sm-min: 768px;
-$screen-md-min: 992px;
-$screen-lg-min: 1280px;
-
-$shadow-1: 0 2px 2px rgba(0, 0, 0, 0.25);
-
-$input-border: 2px solid $secondary;
-
-body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-input {
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  background: none;
-  padding: 4px;
-  margin: 8px;
-  box-sizing: content-box;
-  border-bottom: $input-border;
-  font-family: 'Roboto', sans-serif;
-}
-
-button {
-  line-height: 1;
-  font-size: 14px;
-  color: #FFF;
-  background: $secondary;
-  margin: 8px;
-  padding: 11px 16px;
-  border: none;
-  box-shadow: $shadow-1;
-  border-radius: 2px;
-  font-family: 'Roboto', sans-serif;
-  text-transform: uppercase;
-  font-weight: 600;
-  cursor: pointer;
-
-  &.fab {
-    border-radius: 32px;
-    border: none;
-    padding: 16px;
-    background: $secondary;
-    line-height: 1;
-
-    .material-icons {
-      display: block;
-      margin: auto;
-      width: 24px;
-      height: 24px;
-    }
-  }
-}
-
-.container {
-  max-width: $container-size;
-  margin: auto;
-}
+@import "basic.scss";
 
 #landing {
   text-align: center;
@@ -125,23 +56,6 @@ button {
   #deadline-hour {
     margin-left: 20px
   }
-}
-
-main {
-  position: relative;
-  width: 95%;
-}
-
-nav {
-  width: 100%;
-  .content {
-    font-size: 1.5em;
-  }
-  color: #FFF;
-  background: $primary;
-  padding: 8px 8px 8px 16px;
-  border-bottom: 1px solid #C3C3C3;
-  box-shadow: $shadow-1;
 }
 
 ul#deadlines {
@@ -278,6 +192,16 @@ ul#deadlines {
     }
   }
 
+  #new-deadline-slider {
+    width: 300%;
+    left: 0%;
+    position: relative;
+
+    .slide {
+      padding: 0 20px;
+    }
+  }
+
   #deadline-task {
     font-size: 1.2em;
     display: block;
@@ -304,11 +228,4 @@ ul#deadlines {
     display: block;
     margin: 8px auto;
   }
-}
-
-.card {
-  padding: 16px;
-  border-radius: 4px;
-  background: #EEE;
-  box-shadow: $shadow-1;
 }

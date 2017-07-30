@@ -14,7 +14,7 @@
   </head>
   <body>
     <nav>
-      <div class="content container">
+      <div class="container">
         Workdone
       </div>
     </nav>
@@ -35,19 +35,35 @@
         <button id="show-newdeadline" class="fab"><i class="material-icons">add</i></button>
         <div id="new-deadline">
           <div class="card center-wrapper">
-            <span id="deadline-speech">What will you do?</span>
-            <input id="deadline-task" />
-            <div class="date-suggestions">
+            <div class="slider" id="new-deadline-slider">
+              <div class="slider-band">
+
+                <div class="slide">
+                  <span id="deadline-speech">What will you do?</span>
+                  <input id="deadline-task" />
+                  <button class="next-slide" left="1">Next</button>
+                </div>
+
+                <div class="slide">
+                  <div class="date-suggestions">
+                  </div>
+                  <div class="date-display">
+                    <input id="deadline-day" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
+                    <input id="deadline-month" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
+                    <input id="deadline-year" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="2017" maxlength="4" />
+                    <input id="deadline-hour" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="12" maxlength="2" />:
+                    <input id="deadline-minute" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="00" maxlength="2" />
+                  </div>
+                  <span id="deadline-date-display"></span>
+                  <button class="next-slide" left="2">Next</button>
+                </div>
+
+                <div class="slide">
+                  <div>How to display...</div>
+                  <button id="add-deadline" onclick="addDeadline()">Add deadline</button>
+                </div>
+              </div>
             </div>
-            <div class="date-display">
-              <input id="deadline-day" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
-              <input id="deadline-month" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
-              <input id="deadline-year" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="2017" maxlength="4" />
-              <input id="deadline-hour" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="12" maxlength="2" />:
-              <input id="deadline-minute" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="00" maxlength="2" />
-            </div>
-            <span id="deadline-date-display"></span>
-            <button id="add-deadline" onclick="addDeadline()">Add deadline</button>
           </div>
         </div>
       </section>
@@ -67,6 +83,8 @@
       };
       firebase.initializeApp(config);
     </script>
+    <script src="/js/newdeadline.js"></script>
+    <script src="/js/deadline.js"></script>
     <script src="/js/core.js"></script>
   </body>
 </html>

@@ -40,6 +40,40 @@ button {
       width: 24px;
       height: 24px; }
 
+main {
+  position: relative;
+  width: 95%; }
+
+nav {
+  width: 100%;
+  font-size: 1.5em;
+  color: #FFF;
+  background: #303f9f;
+  padding: 8px 8px 8px 16px;
+  border-bottom: 1px solid #C3C3C3;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25); }
+
+.slider {
+  overflow: hidden;
+  transition: left 0.5s ease-in-out; }
+  .slider .slider-band {
+    width: 100%;
+    display: flex; }
+    .slider .slider-band .slide {
+      flex-grow: 1;
+      flex-basis: 0;
+      box-sizing: border-box; }
+      .slider .slider-band .slide .next-slide {
+        margin: 20px auto;
+        display: block; }
+
+.card {
+  padding: 16px;
+  border-radius: 4px;
+  background: #EEE;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+  overflow: hidden; }
+
 .container {
   max-width: 1280px;
   margin: auto; }
@@ -84,20 +118,6 @@ button {
     width: 2.5em; }
   .date-display #deadline-hour {
     margin-left: 20px; }
-
-main {
-  position: relative;
-  width: 95%; }
-
-nav {
-  width: 100%;
-  color: #FFF;
-  background: #303f9f;
-  padding: 8px 8px 8px 16px;
-  border-bottom: 1px solid #C3C3C3;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25); }
-  nav .content {
-    font-size: 1.5em; }
 
 ul#deadlines {
   margin: 0;
@@ -201,6 +221,12 @@ ul#deadlines {
       background: #ddd;
       border-radius: 80px;
       cursor: pointer; }
+  #new-deadline #new-deadline-slider {
+    width: 300%;
+    left: 0%;
+    position: relative; }
+    #new-deadline #new-deadline-slider .slide {
+      padding: 0 20px; }
   #new-deadline #deadline-task {
     font-size: 1.2em;
     display: block;
@@ -220,9 +246,3 @@ ul#deadlines {
   #new-deadline #add-deadline {
     display: block;
     margin: 8px auto; }
-
-.card {
-  padding: 16px;
-  border-radius: 4px;
-  background: #EEE;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25); }
