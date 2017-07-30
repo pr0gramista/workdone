@@ -34,11 +34,27 @@ button {
     padding: 16px;
     background: #d81b60;
     line-height: 1; }
+    button.fab.fab-mini {
+      padding: 4px; }
     button.fab .material-icons {
       display: block;
       margin: auto;
       width: 24px;
       height: 24px; }
+
+input[type="radio"] {
+  visibility: hidden; }
+  input[type="radio"] + label::before {
+    margin-right: 4px;
+    vertical-align: middle;
+    font-size: 24px;
+    font-family: "Material Icons";
+    color: #666;
+    width: 20px;
+    height: 20px;
+    content: "radio_button_unchecked"; }
+  input[type="radio"]:checked + label::before {
+    content: "radio_button_checked"; }
 
 main {
   position: relative;
@@ -64,7 +80,7 @@ nav {
       flex-basis: 0;
       box-sizing: border-box; }
       .slider .slider-band .slide .next-slide {
-        margin: 20px auto;
+        margin: 8px auto 0 auto;
         display: block; }
 
 .card {
@@ -212,7 +228,8 @@ ul#deadlines {
   #new-deadline .card {
     max-width: 400px; }
   #new-deadline .date-suggestions {
-    text-align: center; }
+    text-align: center;
+    padding: 4px 0; }
     #new-deadline .date-suggestions .date-suggestion {
       font-size: 0.8em;
       display: inline-block;

@@ -41,12 +41,12 @@
                 <div class="slide">
                   <span id="deadline-speech">What will you do?</span>
                   <input id="deadline-task" />
-                  <button class="next-slide" left="1">Next</button>
+                  <button class="fab fab-mini next-slide" left="1">
+                    <i class="material-icons">navigate_next</i>
+                  </button>
                 </div>
 
                 <div class="slide">
-                  <div class="date-suggestions">
-                  </div>
                   <div class="date-display">
                     <input id="deadline-day" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
                     <input id="deadline-month" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="1" maxlength="2" />.
@@ -54,12 +54,19 @@
                     <input id="deadline-hour" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="12" maxlength="2" />:
                     <input id="deadline-minute" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="00" maxlength="2" />
                   </div>
+                  <div class="date-suggestions">
+                  </div>
                   <span id="deadline-date-display"></span>
-                  <button class="next-slide" left="2">Next</button>
+                  <button class="fab fab-mini next-slide" left="2">
+                    <i class="material-icons">navigate_next</i>
+                  </button>
                 </div>
 
                 <div class="slide">
-                  <div>How to display...</div>
+                  <span id="deadline-speech">How would you like to see it?</span>
+                  <input type="radio" name="newdeadline-display" id="nd-display-timer"><label for="nd-display-timer">Timer</label>
+                  <input type="radio" name="newdeadline-display" id="nd-display-progressbar"><label for="nd-display-progressbar">Progress bar</label>
+                  <input type="radio" name="newdeadline-display" id="nd-display-blocks"><label for="nd-display-blocks">Blocks</label>
                   <button id="add-deadline" onclick="addDeadline()">Add deadline</button>
                 </div>
               </div>
