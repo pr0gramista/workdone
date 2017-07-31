@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta theme-color="#303f9f">
+    <link rel="manifest" href="/manifest.json">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -101,6 +103,24 @@
         messagingSenderId: "753972019068"
       };
       firebase.initializeApp(config);
+
+      // Move it somewhere else
+      firebase.messaging().requestPermission()
+      .then(function() {
+        console.log("Permission granted");
+        firebase.messaging().getToken()
+        .then(function(token) {
+          console.log(token)
+        })
+      })
+      .catch(function(err) {
+        console.log('Unable to get permission to notify.', err);
+      });
+
+      firebase.messaging().onMessage(function (data) {
+        console.log(data)
+        alert(data)
+      })
     </script>
     <script src="/js/newdeadline.js"></script>
     <script src="/js/deadline.js"></script>
