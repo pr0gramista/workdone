@@ -4,6 +4,7 @@ css/basic.min.css
 
 # Protect credentials
 backend/admin.json
+backend/secret
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
