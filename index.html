@@ -103,24 +103,6 @@
         messagingSenderId: "753972019068"
       };
       firebase.initializeApp(config);
-
-      // Move it somewhere else
-      firebase.messaging().requestPermission()
-      .then(function() {
-        console.log("Permission granted");
-        firebase.messaging().getToken()
-        .then(function(token) {
-          console.log(token)
-        })
-      })
-      .catch(function(err) {
-        console.log('Unable to get permission to notify.', err);
-      });
-
-      firebase.messaging().onMessage(function (data) {
-        console.log(data)
-        alert(data)
-      })
     </script>
     <script src="/js/newdeadline.js"></script>
     <script src="/js/deadline.js"></script>
