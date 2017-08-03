@@ -15,10 +15,15 @@ function initalizeMessaging() {
     console.log("Notifications :)")
 
     messaging.getToken().then(function(newToken) {
-      console.log("Saving token...")
+      console.log("Reading token...")
       if (newToken) {
-        firebase.database().ref('fcm/' + uid).set({
-          token: newToken
+        firebase.database().ref('fcm/' + uid).orderByValue().equalTo(newToken).once('value').then(function (data) {
+          if (data.val() == null) {
+            firebase.database().ref('fcm/' + uid).push().set(newToken)
+            console.log("Saving token")
+          } else {
+            console.log("Token already saved");
+          }
         })
       }
     })
@@ -35,9 +40,11 @@ function initalizeMessaging() {
     console.log("Token changed")
     messaging.getToken().then(function(newToken) {
       if (newToken) {
-        firebase.database().ref('fcm/' + uid).set({
-          token: newToken
+        firebase.database().ref('fcm/' + uid).equalTo(newToken).once('value').then(function (data) {
+          console.log(data)
         })
+        //  token: newToken
+        //})
       }
     })
     .catch(function(error) {

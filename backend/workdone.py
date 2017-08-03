@@ -35,6 +35,9 @@ default_app = firebase_admin.initialize_app(cred, {
 ref = db.reference('deadlines')
 logger.info('Connected to Firebase')
 
+def get_tokens(uid):
+    return db.reference('fcm/%s' % uid).get().values()
+
 def checkDeadline(deadline):
     if 'notified' in deadline:
         return False
@@ -49,29 +52,29 @@ def checkDeadline(deadline):
 
 
 def notify(user, deadline):
-    token = db.reference('fcm/%s/token' % user).get()
-    if token is None:
-        logging.warning('Token for user %s is missing' % user)
-        return
+    tokens = get_tokens(user)
 
     global secret
-    request = Request(url='https://fcm.googleapis.com/fcm/send')
-    request.unverifiable = True
-    request.add_header('Authorization', secret)
-    request.add_header('Content-Type', 'application/json')
-    request.data = json.dumps({
-        "notification": {
-            "title": "Deadline",
-            "body": deadline['task'],
-            "icon": '/workdone-logo-square.png'
-        },
-        "to": token
-    }).encode('utf-8')
-    logging.debug('Sending notification with payload %s' % request.data)
-    with urlopen(request) as f:
-        pass
-    logging.debug(f.status)
-    logging.debug(f.reason)
+    for token in tokens:
+        request = Request(url='https://fcm.googleapis.com/fcm/send')
+        request.unverifiable = True
+        request.add_header('Authorization', secret)
+        request.add_header('Content-Type', 'application/json')
+        request.data = json.dumps({
+            "notification": {
+                "title": "Deadline",
+                "body": deadline['task'],
+                "icon": '/workdone-logo-square.png'
+            },
+            "to": token
+        }).encode('utf-8')
+        logging.debug('Sending notification for token %s with payload %s' % (token, request.data))
+        with urlopen(request) as f:
+            pass
+        logging.debug(f.status)
+        logging.debug(f.reason)
+    else:
+        logging.warning('Token for user %s is missing' % user)
 
 def setDeadlineNotified(user, deadline_key):
     logging.info('Deadline %s set to notified' % deadline_key)
@@ -88,8 +91,8 @@ def scan():
             should_notify = checkDeadline(user_deadlines[user][deadline])
             if should_notify:
                 logging.info('Notyfing deadline %s' % deadline)
-                notify(user, user_deadlines[user][deadline])
                 setDeadlineNotified(user, deadline)
+                notify(user, user_deadlines[user][deadline])
 
 def alive():
     logger.info('I am still alive %s' % time.time())
