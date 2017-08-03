@@ -62,7 +62,8 @@ def notify(user, deadline):
     request.data = json.dumps({
         "notification": {
             "title": "Deadline",
-            "body": deadline['task']
+            "body": deadline['task'],
+            "icon": '/workdone-logo-square.png'
         },
         "to": token
     }).encode('utf-8')
