@@ -285,3 +285,17 @@ ul#deadlines {
   #new-deadline #add-deadline {
     display: block;
     margin: 8px auto; }
+
+#alerts {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column-reverse; }
+  #alerts .alert {
+    margin: 10px;
+    border-radius: 4px;
+    background: #EEE;
+    min-width: 10%;
+    padding: 20px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25); }

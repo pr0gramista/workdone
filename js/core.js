@@ -40,11 +40,14 @@ function initalizeMessaging() {
     console.log("Token changed")
     messaging.getToken().then(function(newToken) {
       if (newToken) {
-        firebase.database().ref('fcm/' + uid).equalTo(newToken).once('value').then(function (data) {
-          console.log(data)
+        firebase.database().ref('fcm/' + uid).orderByValue().equalTo(newToken).once('value').then(function (data) {
+          if (data.val() == null) {
+            firebase.database().ref('fcm/' + uid).push().set(newToken)
+            console.log("Saving token")
+          } else {
+            console.log("Token already saved");
+          }
         })
-        //  token: newToken
-        //})
       }
     })
     .catch(function(error) {
@@ -53,7 +56,7 @@ function initalizeMessaging() {
   })
 
   messaging.onMessage(function (data) {
-    alert(data) //TODO Make something nicer than alert
+    addAlert(data.notification.title + ': ' + data.notification.body, 5000)
   })
 }
 
@@ -109,4 +112,19 @@ function loginWithGoogle() {
   }).catch(function(error) {
     console.error(error)
   })
+}
+
+// Alerts
+function removeAlert(id) {
+  document.querySelector(`.alert[alert="${id}"]`).remove()
+}
+
+function addAlert(text, time) {
+  var alert = document.createElement('div')
+  alert.innerHTML = text
+  alert.classList.add('alert')
+  var alertID = Math.random().toString(36).substring(7)
+  alert.setAttribute('alert', alertID)
+  setTimeout(removeAlert, time, alertID)
+  document.getElementById('alerts').append(alert)
 }
