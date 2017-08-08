@@ -73,13 +73,17 @@ exports.deadlineUpdated = functions.database.ref('/deadlines/{uid}/{did}')
       var did = event.params.did;
       var nid = uid + '----' + did;
 
-      var createNotification = admin.database().ref('/notifications/' + nid).set({
-        uid: uid,
-        did: did,
-        time: getNextTime(event.data.val().end_date)
-      });
+      var deadline = event.data.val()
 
-      return createNotification
+      if (deadline.last_call == null || deadline.last_call < deadline.end_date) {
+        var createNotification = admin.database().ref('/notifications/' + nid).set({
+          uid: uid,
+          did: did,
+          time: getNextTime(event.data.val().end_date)
+        });
+
+        return createNotification
+      }
     });
 
 exports.deadlineCreated = functions.database.ref('/deadlines/{uid}/{did}')
@@ -88,11 +92,34 @@ exports.deadlineCreated = functions.database.ref('/deadlines/{uid}/{did}')
       var did = event.params.did;
       var nid = uid + '----' + did;
 
-      var createNotification = admin.database().ref('/notifications/' + nid).set({
-        uid: uid,
-        did: did,
-        time: getNextTime(event.data.val().end_date)
-      });
+      var deadline = event.data.val()
 
-      return createNotification;
+      if (deadline.last_call == null || deadline.last_call < deadline.end_date) {
+        var createNotification = admin.database().ref('/notifications/' + nid).set({
+          uid: uid,
+          did: did,
+          time: getNextTime(event.data.val().end_date)
+        });
+
+        return createNotification
+      }
+    })
+
+exports.notificationRewrite = functions.database.ref('/notifications/{nid}')
+    .onDelete(event => {
+      var nid = event.params.nid;
+
+      var oldNotification = event.data.previous.val();
+      var uid = oldNotification.uid;
+      var did = oldNotification.did;
+
+      admin.database().ref('/deadlines/' + uid + '/' + did).once('value').then((snapshot) => {
+        if (snapshot.exists()) {
+          let now = new Date().getTime()
+          return admin.database().ref('/deadlines/' + uid + '/' + did + '/last_call').set(now)
+
+          // After we update the deadline another Cloud Function will trigger creating a new
+          // notification if its right
+        }
+      });
     })
