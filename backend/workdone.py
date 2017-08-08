@@ -47,8 +47,14 @@ def alive():
     logger.info('I am still alive %s' % time.time())
 
 
+def update_life_check():
+    db.reference('life_check').set(int(now()))
+
 schedule.every().second.do(scan)
 schedule.every(6).hours.do(alive)
+schedule.every(5).minutes.do(update_life_check)
+
+update_life_check()
 
 while True:
     schedule.run_pending()
