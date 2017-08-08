@@ -21,11 +21,15 @@ default_app = firebase_admin.initialize_app(cred, {
 })
 logger.info('Connected to Firebase')
 
+
 def now():
     return time.time() * 1000
 
+
 # Scan notification
 notifications_ref = db.reference('notifications').order_by_child('time')
+
+
 def scan():
     notifications = notifications_ref.get()
     if notifications is not None:
@@ -43,6 +47,7 @@ def scan():
 
 def alive():
     logger.info('I am still alive %s' % time.time())
+
 
 schedule.every().second.do(scan)
 schedule.every(6).hours.do(alive)
