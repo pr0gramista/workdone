@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "deadlines": {
+      "$user": {
+        ".write": "auth.uid === $user",
+        ".read": "auth.uid === $user"
+      },
+      ".read": false,
+      ".indexOn": "end_date"
+    },
+    "fcm": {
+      "$user": {
+        ".write": "auth.uid === $user",
+        ".read": "auth.uid === $user"
+      },
+      ".read": false
+    },
+    "notifications": {
+      ".read": false,
+      ".write": false,
+      ".indexOn": "time"
+    },
+    "life_check": {
+      ".read": true,
+      ".write": false
+    }
+  }
+}
