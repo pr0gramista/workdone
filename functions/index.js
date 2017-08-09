@@ -27,6 +27,10 @@ const rules = [
     'new_time': hours(1)
   },
   {
+    'max_delta': hours(12),
+    'new_time': hours(6),
+  },
+  {
     'max_delta': hours(24),
     'new_time': hours(12),
   },
