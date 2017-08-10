@@ -96,6 +96,23 @@ function removeDeadline(key) {
   firebase.database().ref('deadlines/' + uid + '/' + key).remove()
 }
 
+firebase.database().ref('/life_check').on('value', function (snapshot) {
+  var lifeCheck = Number(snapshot.val())
+  var now = new Date().getTime()
+
+  if (now - lifeCheck < 360000) {// 360 seconds ~ 6 minutes
+    document.getElementById('life_check').classList.remove('offline')
+    document.getElementById('life_check').classList.add('online')
+
+    document.getElementById('life_check').innerHTML = 'online'
+  } else {
+    document.getElementById('life_check').classList.add('offline')
+    document.getElementById('life_check').classList.remove('online')
+
+    document.getElementById('life_check').innerHTML = 'offline'
+  }
+})
+
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     uid = user.uid

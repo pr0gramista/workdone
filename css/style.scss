@@ -258,3 +258,13 @@ ul#deadlines {
     box-shadow: $shadow-1;
   }
 }
+
+#life_check {
+  &.online {
+    color: #4caf50;
+  }
+
+  &.offline {
+    color: #f44336;
+  }
+}
