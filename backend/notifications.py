@@ -3,6 +3,31 @@ from urllib.request import Request
 from urllib.request import urlopen
 import json
 import logging
+import random
+import time
+
+reminders = [
+    'There is something to do',
+    'Do you remember?',
+    'Member?',
+    'WORK WORK WORK',
+    'There\'s still time',
+    'What will you do today?',
+    'Come on!',
+    'The clock is ticking',
+    'Time is running out',
+    'You can still fix it'
+]
+
+endings = [
+    'DEADLINE',
+    'The End',
+    'Deadline',
+    '0s left'
+]
+
+def now():
+    return time.time() * 1000
 
 with open('secret') as f:
     secret = 'key=' + f.read().replace('\n','')
@@ -13,7 +38,15 @@ def get_tokens(uid):
 
 def notify_deadline(user, deadline_key):
     deadline = db.reference('/deadlines/%s/%s' % (user, deadline_key)).get()
-    notify(user, 'Deadline is here!', deadline['task'])
+
+    title = None
+
+    if int(deadline['end_date']) > now() + 10000: # Add 10 seconds padding
+        title = random.choice(reminders)
+    else:
+        title = random.choice(endings)
+
+    notify(user, title, deadline['task'])
 
 def notify(user, title, body):
     logging.info('Notifying %s' % user)
