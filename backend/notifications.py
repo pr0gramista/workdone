@@ -6,6 +6,9 @@ import logging
 import random
 import time
 
+logger = logging.getLogger(__name__)
+secret = None
+
 reminders = [
     'There is something to do',
     'Do you remember?',
@@ -26,33 +29,43 @@ endings = [
     '0s left'
 ]
 
+
 def now():
     return time.time() * 1000
 
-with open('secret') as f:
-    secret = 'key=' + f.read().replace('\n','')
-logging.info('Secret loaded')
+
+def load_secret():
+    global secret
+    with open('secret') as f:
+        secret = 'key=' + f.read().replace('\n', '')
+    logger.info('Secret loaded')
+
 
 def get_tokens(uid):
     return db.reference('fcm/%s' % uid).get().values()
+
 
 def notify_deadline(user, deadline_key):
     deadline = db.reference('/deadlines/%s/%s' % (user, deadline_key)).get()
 
     title = None
 
-    if int(deadline['end_date']) > now() + 10000: # Add 10 seconds padding
+    if int(deadline['end_date']) > now() + 10000:  # Add 10 seconds padding
         title = random.choice(reminders)
     else:
         title = random.choice(endings)
 
     notify(user, title, deadline['task'])
 
+
 def notify(user, title, body):
-    logging.info('Notifying %s' % user)
+    logger.info('Notifying %s' % user)
     tokens = get_tokens(user)
 
     global secret
+    if secret is None:
+        load_secret()
+
     for token in tokens:
         request = Request(url='https://fcm.googleapis.com/fcm/send')
         request.unverifiable = True
@@ -66,11 +79,11 @@ def notify(user, title, body):
             },
             "to": token
         }).encode('utf-8')
-        logging.debug('Sending notification for token %s with payload %s' % (token, request.data))
+        logger.debug('Sending notification for token %s with payload %s' % (token, request.data))
         with urlopen(request) as f:
             pass
-        logging.debug(f.status)
-        logging.debug(f.reason)
+        logger.debug(f.status)
+        logger.debug(f.reason)
 
     if len(tokens) == 0:
-        logging.warning('Token for user %s is missing' % user)
+        logger.warning('Token for user %s is missing' % user)
