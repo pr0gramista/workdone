@@ -7,9 +7,12 @@ import time
 
 # Logging
 import logging
-logging.basicConfig(level=logging.DEBUG, filename='workdone.log')
+import logging.handlers
+logging.basicConfig(level=logging.DEBUG)
 logging.getLogger('schedule').propagate = False
 logger = logging.getLogger()
+logging_file_handle = logging.handlers.RotatingFileHandler('workdone.log', maxBytes=1024*1024, backupCount=5)
+logger.addHandler(logging_file_handle)
 logger.info('Workdone backend up!')
 
 # Connect to Firebase
